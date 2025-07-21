@@ -2,27 +2,24 @@
 <img src="https://i.imgur.com/pU5A58S.png" alt="Microsoft Active Directory Logo"/>
 </p>
 
-<h1>Network Security Groups (NSGs) and Inspecting Traffic Between Azure Virtual Machines</h1>
-In this tutorial, we observe various network traffic to and from Azure Virtual Machines with Wireshark as well as experiment with Network Security Groups. <br />
-
+<h1>Group Policy, Managing accounts & Observing logs a</h1>
+This section covers a few everyday tasks you’ll likely run into as an IT support or system admin. We’ll walk through how to deal with account lockouts, enable or disable users, and apply changes using Group Policy. You’ll also learn how to check for failed logins...useful for checking login issues or early signs of a security problem. Great, practical stuff you’ll use often.
 
 <h2>Video Demonstration</h2>
 
-- ### [YouTube: Azure Virtual Machines, Wireshark, and Network Security Groups](https://www.youtube.com)
+- ### [YouTube: Managing accounts and Security Groups in Azure Virtual Machines](https://www.youtube.com)
 
 <h2>Environments and Technologies Used</h2>
 
 - Microsoft Azure (Virtual Machines/Compute)
 - Remote Desktop
-- Various Command-Line Tools
-- Various Network Protocols (SSH, RDH, DNS, HTTP/S, ICMP)
-- Wireshark (Protocol Analyzer)
+- Command-Line
 
 <h2>Operating Systems Used </h2>
 
 - Windows 10 (21H2)
-- Ubuntu Server 20.04
-
+- Windows Server 2022
+  
 <h2>High-Level Steps</h2>
 
 - Step 1

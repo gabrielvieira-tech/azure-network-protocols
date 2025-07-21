@@ -33,7 +33,20 @@ This section covers a few everyday tasks you’ll likely run into as an IT suppo
 <img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 <p>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+
+<h2>Group policy setup</h2>
+Start by logging into DC-1 as jane_admin. Pick any of the test user accounts you created earlier. On Client-1, try to log in using that account, but intentionally enter the wrong password about ten times. Right now, nothing will happen — we haven’t set any lockout policy yet.
+
+Next, go back to DC-1 and open Group Policy Management. Create a new GPO and name it something like “Account Lockout Policy.” Edit it and navigate to:
+Computer Configuration > Policies > Windows Settings > Security Settings > Account Policies > Account Lockout Policy.
+
+Here’s what you want to configure:
+
+-Set Account lockout threshold to 5 invalid attempts
+
+-Set the lockout duration to 15 minutes
+
+-Set the reset counter time to 15 minutes
 </p>
 <br />
 
@@ -41,7 +54,11 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 <img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 <p>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+<h2>Dealing with Account Lockouts</h2>
+Once that’s done, wait a few minutes (or run gpupdate /force on Client-1), then try logging in again using the same user and a bad password — this time just six times. The account should now be locked.
+
+Head back to ADUC on DC-1, find the locked account, open its properties, and under the Account tab, check the “Unlock account” box. You can also reset the password here if needed. After that, try logging in again with the correct password — and you should be good to go.
+
 </p>
 <br />
 
@@ -49,6 +66,30 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 <img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 <p>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+<h2>Enabling and Disabling Accounts</h2>
+To test how account disabling works, log into DC-1 as jane_admin and open Active Directory Users and Computers (ADUC). Find the same user account you’ve been using for testing, right-click on it, and choose Disable Account. You’ll see a small down arrow appear on the user icon, showing it’s been disabled.
+
+Now, switch over to Client-1 and try logging in with that account. You’ll get an error message saying the account has been disabled — this is expected behavior.
+
+Go back to DC-1, right-click the account again, and choose Enable Account. Once that’s done, try logging in from Client-1 again. You should now be able to sign in normally.
+
 </p>
 <br />
+
+<p>
+<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+</p>
+<p>
+<h2>Observing Logs</h2>
+Sometimes it’s not enough to just see what happens — you’ll want to check the logs to confirm things like failed login attempts, lockouts, or account changes.
+
+Start by logging into client-1 as jane_admin. Open Event Viewer and go to:
+Windows Logs > Security
+
+Here, you’ll see events like failed logins, account lockouts, and other important authentication activity. Look for event IDs like 4625 (failed login) or 4740 (account lockout) to get more details on what happened and when.
+
+These logs are your go-to place when something goes wrong and you need to figure out why.
+
+</p>
+<br />
+
